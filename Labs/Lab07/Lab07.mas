@@ -1,0 +1,157 @@
+Input
+Store	a
+Input
+Store	b
+JnS	egypt
+Halt
+
+egypt,		Clear
+begin_egypt,	Jump	a_equal_0
+a_equal_0,	Load	a
+		Skipcond	400
+		Jump	b_equal_0
+		Jump	end_egypt
+
+b_equal_0,	Load	b
+		Skipcond	400
+		Jump	if_1
+		Jump	end_egypt
+
+if_1,		Load	zero
+		Store	div_times
+		Store	div_mod
+		Load	b
+		Store	div_a
+		Load	a
+		Store	div_b
+		JnS	div
+		Store	c
+		Load	c
+		Skipcond	400
+		Jump	if_2
+		Load	div_times
+		Output
+		Jump	end_egypt
+
+if_2,		Load	zero
+		Store	div_times
+		Store	div_mod
+		Load	a
+		Store	div_a
+		Load	b
+		Store	div_b
+		JnS	div
+		Store	c
+		Load	c
+		Skipcond	400
+		Jump	if_3
+		Load	div_times
+		Output
+		Jump	end_egypt
+
+if_3,		Load	a
+		Subt	b
+		Skipcond	800
+		Jump	egypt_else
+		Load	zero
+		Store	div_times
+		Store	div_mod
+		Load	a
+		Store	div_a
+		Load	b
+		Store	div_b
+		JnS	div
+		Store	a
+		Load	div_times
+		Output
+		Jump	begin_egypt
+
+egypt_else,	Load	zero
+		Store	div_times
+		Store	div_mod
+		Store	mult_acum
+		Load	b
+		Store	div_a
+		Load	a
+		Store	div_b
+		JnS	div
+		Load	div_times
+		Add	one
+		Store	n
+		Output
+		Load	a
+		Store	mult_a
+		Load	n
+		Store	mult_b
+		JnS	mult
+		Subt	b
+		Store	a
+		
+		Load	zero
+		Store	mult_acum
+		
+		Load	b
+		Store	mult_a
+		Load	n
+		Store	mult_b
+		JnS	mult
+		Store	b
+		
+		Jump	begin_egypt
+
+end_egypt,	JumpI	egypt
+
+
+div,	Clear
+loop_div,	Load	div_a
+		Skipcond	800
+		Jump	fix_div
+		Load	div_a
+		Subt	div_b
+		Store	div_a
+		Load	div_times
+		Add	one
+		Store	div_times
+		Jump	loop_div
+fix_div,	Load	div_a
+		Skipcond	000
+		Jump	end_div
+		Load	div_times
+		Subt	one
+		Store	div_times
+		Load	div_a
+		Add	div_b
+		Store	div_mod
+		Jump	end_div
+end_div,	Load	div_mod
+		JumpI	div
+
+mult,	Clear
+loop_mult,	Load	mult_a
+		Skipcond	800
+		Jump	end_mult
+		Load	mult_acum
+		Add	mult_b
+		Store	mult_acum
+		Load	mult_a
+		Subt	one
+		Store	mult_a
+		Jump	loop_mult
+end_mult,	Load	mult_acum
+		JumpI	mult
+
+mult_a,	dec	0
+mult_b,	dec	0
+mult_acum,	dec	0
+
+div_a,	dec	0
+div_b,	dec	0
+div_times,	dec	0
+div_mod,	dec	0
+
+a,	dec	0
+b,	dec	0
+c,	dec	0
+n,	dec	0
+one,	dec	1
+zero,	dec	0

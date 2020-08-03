@@ -1,0 +1,23 @@
+program minimo;
+
+var
+	i,n : integer;
+	A : array [0..999] of real;
+	r : real;
+begin
+	writeln('Size of vector: ');
+	readln(n);
+	for i := 1 to n do
+		begin
+			writeln('Enter a number: ');
+			readln(A[i]);
+		end;
+	r := A[1];
+	for i := 1 to n do
+		begin
+			if A[i] < r then
+				r := A[i];
+		end;
+	writeln('The minimum is: ');
+	writeln(r);
+end.

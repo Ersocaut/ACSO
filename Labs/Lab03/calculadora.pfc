@@ -1,0 +1,67 @@
+program calculadora;
+
+var 
+	opt, rd : integer;
+procedure Suma;
+var
+	a,b,c : integer;
+begin 
+	writeln('Number a: ');
+	readln(a);
+	writeln('Number b: ');
+	readln(b);
+	c := (a + b);
+	writeln(c);
+end;
+
+procedure Resta;
+var
+	a,b,c : integer;
+begin
+	writeln('Number a: ');
+	readln(a);
+	writeln('Number b: ');
+	readln(b);
+	c := a - b;
+	wrrteln(a,'-',b,'=',c);
+end;
+
+procedure Multi;
+var 
+	a,b,c : integer;
+begin
+	writeln('Number a: ');
+	readln(a);
+	writeln('Number b: ');
+	readln(b);
+	c := a * b;
+	writeln(a,'*',b,'=',c);
+end;
+
+procedure Divid;
+var 
+	a,b,c : integer;
+begin
+	writeln('Number a: ');
+	readln(a);
+	writeln('Number b: ');
+	readln(b);
+	c := a/b;
+	writeln(a,'/',b,'=',c);
+end;
+
+begin
+	opt := 0;
+	while (opt <> 5) do
+		begin
+			writeln('Option: ');
+			readln(rd);
+			writeln(rd);
+			opt := rd;
+			case rd of
+			1: Suma;
+			2: Resta;
+			3: Multi;
+			4: Divid;	
+		end;
+end.

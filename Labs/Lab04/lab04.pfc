@@ -1,0 +1,20 @@
+program lab4;
+
+var 
+	t,n,i,acum,j,form : integer;
+
+begin 
+	readln(t);
+	for i := 1 to t do
+	begin 
+		readln(n);
+		acum := 0;
+		for j := 1 to n do
+		begin
+			acum := acum + j;
+		end;
+		writeln(acum);
+		form :=  ( n * ( n + 1) ) div 2;
+		writeln(form);
+	end;
+end.

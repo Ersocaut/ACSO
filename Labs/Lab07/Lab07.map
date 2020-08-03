@@ -1,0 +1,33 @@
+ ----------------------
+ Symbol      | Location
+ ------------+---------
+ a           |   087
+ a_equal_0   |   008
+ b           |   088
+ b_equal_0   |   00C
+ begin_egypt |   007
+ c           |   089
+ div         |   05C
+ div_a       |   083
+ div_b       |   084
+ div_mod     |   086
+ div_times   |   085
+ egypt       |   006
+ egypt_else  |   03E
+ end_div     |   071
+ end_egypt   |   05B
+ end_mult    |   07E
+ fix_div     |   067
+ if_1        |   010
+ if_2        |   01F
+ if_3        |   02E
+ loop_div    |   05D
+ loop_mult   |   074
+ mult        |   073
+ mult_a      |   080
+ mult_acum   |   082
+ mult_b      |   081
+ n           |   08A
+ one         |   08B
+ zero        |   08C
+

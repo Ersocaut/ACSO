@@ -1,0 +1,16 @@
+program suma;
+
+var
+	a : integer;
+	b : integer;
+	c : integer;
+
+begin
+	writeln('Numero a: ');
+	readln(a);
+	writeln('Numero b: ');
+	readln(b);
+	c := a + b;
+	writeln('The sum is: ');
+	writeln(c);
+end.

@@ -1,0 +1,198 @@
+     Assembly listing for: Pro05.mas
+                Assembled: Mon Jul 13 00:53:24 COT 2020
+
+000 5000 |            INPUT                
+001 207A |            STORE Bel            
+002 2074 |            STORE gcd_a          
+003 5000 |            INPUT                
+004 207B |            STORE Ing            
+005 2075 |            STORE gcd_b          
+006 0062 |            JNS gcd              
+007 2082 |            STORE gcd_a1         
+         |                                
+008 5000 |            INPUT                
+009 207C |            STORE Nor            
+00A 2074 |            STORE gcd_a          
+00B 5000 |            INPUT                
+00C 207D |            STORE Irl            
+00D 2075 |            STORE gcd_b          
+00E 0062 |            JNS gcd              
+00F 2083 |            STORE gcd_a2         
+         |                                
+010 5000 |            INPUT                
+011 207E |            STORE Fra            
+         |                                	
+012 1082 |            LOAD gcd_a1          
+013 2074 |            STORE gcd_a          
+014 1083 |            LOAD gcd_a2          
+015 2075 |            STORE gcd_b          
+016 0062 |            JNS gcd              
+017 2082 |            STORE gcd_a1         
+         |                                	
+018 107E |            LOAD Fra             
+019 2074 |            STORE gcd_a          
+01A 1082 |            LOAD gcd_a1          
+01B 2075 |            STORE gcd_b          
+01C 0062 |            JNS gcd              
+01D 2084 |            STORE gcd_t          
+01E 6000 |            OUTPUT               
+         |                                
+01F 107F |            LOAD Tot             
+020 307A |            ADD Bel              
+021 307B |            ADD Ing              
+022 307C |            ADD Nor              
+023 307D |            ADD Irl              
+024 307E |            ADD Fra              
+025 207F |            STORE Tot            
+         |                                	
+026 1084 |            LOAD gcd_t           
+027 2078 |            STORE div_b          
+028 107A |            LOAD Bel             
+029 2077 |            STORE div_a          
+02A 004B |            JNS div              
+02B 6000 |            OUTPUT               
+02C 1081 |            LOAD zero            
+02D 2076 |            STORE div_times      
+         |                                	
+02E 107B |            LOAD Ing             
+02F 2077 |            STORE div_a          
+030 004B |            JNS div              
+031 6000 |            OUTPUT               
+032 1081 |            LOAD zero            
+033 2076 |            STORE div_times      
+         |                                	
+034 107C |            LOAD Nor             
+035 2077 |            STORE div_a          
+036 004B |            JNS div              
+037 6000 |            OUTPUT               
+038 1081 |            LOAD zero            
+039 2076 |            STORE div_times      
+         |                                	
+03A 107D |            LOAD Irl             
+03B 2077 |            STORE div_a          
+03C 004B |            JNS div              
+03D 6000 |            OUTPUT               
+03E 1081 |            LOAD zero            
+03F 2076 |            STORE div_times      
+         |                                	
+040 107E |            LOAD Fra             
+041 2077 |            STORE div_a          
+042 004B |            JNS div              
+043 6000 |            OUTPUT               
+044 1081 |            LOAD zero            
+045 2076 |            STORE div_times      
+         |                                
+046 107F |            LOAD Tot             
+047 2077 |            STORE div_a          
+048 004B |            JNS div              
+049 6000 |            OUTPUT               
+04A 7000 |            HALT                 
+         |                                	
+         |                                	
+04B A000 |  div       CLEAR                
+04C 1077 |  loop_div  LOAD div_a           
+04D 8800 |            SKIPCOND 800         
+04E 9056 |            JUMP fix_div         
+04F 1077 |            LOAD div_a           
+050 4078 |            SUBT div_b           
+051 2077 |            STORE div_a          
+052 1076 |            LOAD div_times       
+053 3080 |            ADD one              
+054 2076 |            STORE div_times      
+055 904C |            JUMP loop_div        
+056 1077 |  fix_div   LOAD div_a           
+057 8000 |            SKIPCOND 000         
+058 9060 |            JUMP end_div         
+059 1076 |            LOAD div_times       
+05A 4080 |            SUBT one             
+05B 2076 |            STORE div_times      
+05C 1077 |            LOAD div_a           
+05D 3078 |            ADD div_b            
+05E 2079 |            STORE div_mod        
+05F 9060 |            JUMP end_div         
+060 1076 |  end_div   LOAD div_times       
+061 C04B |            JUMPI div            
+         |                                
+         |                                
+062 A000 |  gcd       CLEAR                
+063 1074 |  eval_gcd  LOAD gcd_a           
+064 4075 |            SUBT gcd_b           
+065 8400 |            SKIPCOND 400         
+066 9068 |            JUMP while_gcd       
+067 9072 |            JUMP end_gcd         
+068 1074 |  while_gcd LOAD gcd_a           
+069 4075 |            SUBT gcd_b           
+06A 8800 |            SKIPCOND 800         
+06B 906E |            JUMP else_gcd        
+06C 2074 |            STORE gcd_a          
+06D 9063 |            JUMP eval_gcd        
+06E 1075 |  else_gcd  LOAD gcd_b           
+06F 4074 |            SUBT gcd_a           
+070 2075 |            STORE gcd_b          
+071 9063 |            JUMP eval_gcd        
+072 1074 |  end_gcd   LOAD gcd_a           
+073 C062 |            JUMPI gcd            
+         |                                
+         |                                
+         |                                
+074 0000 |  gcd_a     DEC 0                
+075 0000 |  gcd_b     DEC 0                
+         |                                
+076 0000 |  div_times DEC 0                
+077 0000 |  div_a     DEC 0                
+078 0000 |  div_b     DEC 0                
+079 0000 |  div_mod   DEC 0                
+         |                                
+07A 0000 |  Bel       DEC 0                
+07B 0000 |  Ing       DEC 0                
+07C 0000 |  Nor       DEC 0                
+07D 0000 |  Irl       DEC 0                
+07E 0000 |  Fra       DEC 0                
+07F 0000 |  Tot       DEC 0                
+         |                                
+080 0001 |  one       DEC 1                
+081 0000 |  zero      DEC 0                
+082 0000 |  gcd_a1    DEC 0                
+083 0000 |  gcd_a2    DEC 0                
+084 0000 |  gcd_t     DEC 0                
+
+Assembly successful.
+
+         SYMBOL TABLE
+         -----------------------------------------------------
+          Symbol    | Defined | References 
+         -----------+---------+-------------------------------
+          Bel       |   07A   | 001, 020, 028
+          Fra       |   07E   | 011, 018, 024, 040
+          Ing       |   07B   | 004, 021, 02E
+          Irl       |   07D   | 00C, 023, 03A
+          Nor       |   07C   | 009, 022, 034
+          Tot       |   07F   | 01F, 025, 046
+          div       |   04B   | 02A, 030, 036, 03C, 042, 048, 
+                    |         | 061
+          div_a     |   077   | 029, 02F, 035, 03B, 041, 047, 
+                    |         | 04C, 04F, 051, 056, 05C
+          div_b     |   078   | 027, 050, 05D
+          div_mod   |   079   | 05E
+          div_times |   076   | 02D, 033, 039, 03F, 045, 052, 
+                    |         | 054, 059, 05B, 060
+          else_gcd  |   06E   | 06B
+          end_div   |   060   | 058, 05F
+          end_gcd   |   072   | 067
+          eval_gcd  |   063   | 06D, 071
+          fix_div   |   056   | 04E
+          gcd       |   062   | 006, 00E, 016, 01C, 073
+          gcd_a     |   074   | 002, 00A, 013, 019, 063, 068, 
+                    |         | 06C, 06F, 072
+          gcd_a1    |   082   | 007, 012, 017, 01A
+          gcd_a2    |   083   | 00F, 014
+          gcd_b     |   075   | 005, 00D, 015, 01B, 064, 069, 
+                    |         | 06E, 070
+          gcd_t     |   084   | 01D, 026
+          loop_div  |   04C   | 055
+          one       |   080   | 053, 05A
+          while_gcd |   068   | 066
+          zero      |   081   | 02C, 032, 038, 03E, 044
+         -----------------------------------------------------
+
+

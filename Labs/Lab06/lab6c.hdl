@@ -1,0 +1,14 @@
+//S = ~X Z + ~X Y + X ~Y + X ~Z
+//S = ~X Z + X ~Z + ~X Y + X ~Y
+//S = X xor Z + X xor Y
+//
+
+CHIP lab6c{
+	IN X,Y,Z;
+	OUT S;
+	
+	PARTS:
+		Xor( a = X, b = Z, out = S1 );
+		Xor( a = X, b = Y, out = S2 );
+		Or( a = S1, b = S2, out = S );
+}

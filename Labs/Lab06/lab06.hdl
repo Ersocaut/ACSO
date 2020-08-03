@@ -1,0 +1,44 @@
+/*
+    i = a3' a2' a1 a0 + a3' a2 a1' a0 + a3' a2 a1 a0' + a3 a2' a1' a0 + a3 a2' a1 a0' + a3 a2 a1' a0'
+      = a3'(a2' a1 a0 + a2 a1' a0 + a2 a1 a0') + a3(a2' a1' a0 + a2' a1 a0' + a2 a1' a0')
+      = a3'(a0(a2' a1 + a2 a1') + a2 a1 a0') + a3(a2' a1' a0 + a0'(a2' a1 + a2 a1'))
+      = a3'(a0(a2 ^ a1) + a2 a1 a0') + a3(a0'(a2 ^ a1) + a2' a1' a0)
+*/
+
+CHIP lab06 {
+    IN a3,a2,a1,a0;
+    OUT i;
+
+    PARTS:
+        //a0(a2 ^ a1)
+        Xor(a=a2, b=a1, out=c);
+        And(a=a0, b=c, out=d);
+
+        //a2 a1 a0'
+        And(a=a2, b=a1, out=e);
+        Not(in=a0, out=f);
+        And(a=e, b=f, out=g);
+
+        //a3'(a0(a2 ^ a1) + a2 a1 a0')
+        Or(a=d, b=g, out=h);
+        Not(in=a3, out=j);
+        And(a=j, b=h, out=k);
+
+        //a0'(a2 ^ a1)
+        Xor(a=a2, b=a1, out=l);
+        Not(in=a0, out=m);
+        And(a=m, b=l, out=n);
+
+        //a2' a1' a0
+        Not(in=a2, out=o);
+        Not(in=a1, out=p);
+        And(a=o, b=p, out=q);
+        And(a=q, b=a0, out=r);
+
+        //a3(a0'(a2 ^ a1) + a2' a1' a0)
+        Or(a=n, b=r, out=s);
+        And(a=a3, b=s, out=t);
+
+        //Salida
+        Or(a=k, b=t, out=i);
+}

@@ -1,0 +1,15 @@
+CHIP lab6f{
+	IN A0,A1,A2,A3;
+	OUT O0,O1,O2,O3;
+	
+	PARTS:
+		Not(in = A0, out = S0);
+		Not(in = A1, out = S1);
+		Not(in = A2, out = S2);
+		Not(in = A3, out = S3);
+		
+		Not(in = S0, out = O0);
+		Not(in = S1, out = O1);
+		Not(in = S2, out = O2);
+		Not(in = S3, out = O3);
+}

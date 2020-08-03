@@ -1,0 +1,35 @@
+//S = (A + B + C) (A + B' + C) (A' + B + C) (A' + B' + C)
+
+CHIP lab6d{
+	IN A, B, C;
+	OUT S;
+	
+	PARTS:
+		//Not
+		Not(in = A, out = NA);
+		Not(in = B, out = NB);
+		
+		//(A + B + C)
+		Or( a = B, b = C, out = S1 );
+		Or(a = A, b = S1, out = S2);
+		
+		//(A + B' + C) 
+		Or( a = A, b = NB, out = S3 );
+		Or( a = S3, b = C, out = S4 );
+		
+		//(A' + B + C)
+		Or( a = S1, b  = NA, out = S5 );
+		
+		//(A' + B' + C)
+		Or(a = NB, b = C, out = E1);
+		Or( a = NA, b = E1, out = S6 );
+		
+		//(A + B + C) (A + B' + C)
+		And( a = S2, b = S4, out = S7 );
+		
+		//(A' + B + C) (A' + B' + C)
+		And( a = S5, b = S6, out = S8 );
+		
+		//S
+		And( a = S7, b = S8, out = S );
+}

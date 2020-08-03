@@ -1,0 +1,14 @@
+CHIP lab6b{
+	IN A,B,C;;
+	OUT Y,Z;
+	
+	PARTS:
+		Not( in = A, out = NA );
+
+		And( a = B, b = C, out = S1 );
+
+		Or( a = S1, b = C, out = Z );
+		
+		Xor( a = NA, b = S1, out = Y );
+		
+}

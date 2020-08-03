@@ -1,0 +1,203 @@
+     Assembly listing for: Lab07.mas
+                Assembled: Mon Jul 13 22:45:27 COT 2020
+
+000 5000 |              INPUT                  
+001 2087 |              STORE a                
+002 5000 |              INPUT                  
+003 2088 |              STORE b                
+004 0006 |              JNS egypt              
+005 7000 |              HALT                   
+         |                                    
+006 A000 |  egypt       CLEAR                  
+007 9008 |  begin_egypt JUMP a_equal_0         
+008 1087 |  a_equal_0   LOAD a                 
+009 8400 |              SKIPCOND 400           
+00A 900C |              JUMP b_equal_0         
+00B 905B |              JUMP end_egypt         
+         |                                    
+00C 1088 |  b_equal_0   LOAD b                 
+00D 8400 |              SKIPCOND 400           
+00E 9010 |              JUMP if_1              
+00F 905B |              JUMP end_egypt         
+         |                                    
+010 108C |  if_1        LOAD zero              
+011 2085 |              STORE div_times        
+012 2086 |              STORE div_mod          
+013 1088 |              LOAD b                 
+014 2083 |              STORE div_a            
+015 1087 |              LOAD a                 
+016 2084 |              STORE div_b            
+017 005C |              JNS div                
+018 2089 |              STORE c                
+019 1089 |              LOAD c                 
+01A 8400 |              SKIPCOND 400           
+01B 901F |              JUMP if_2              
+01C 1085 |              LOAD div_times         
+01D 6000 |              OUTPUT                 
+01E 905B |              JUMP end_egypt         
+         |                                    
+01F 108C |  if_2        LOAD zero              
+020 2085 |              STORE div_times        
+021 2086 |              STORE div_mod          
+022 1087 |              LOAD a                 
+023 2083 |              STORE div_a            
+024 1088 |              LOAD b                 
+025 2084 |              STORE div_b            
+026 005C |              JNS div                
+027 2089 |              STORE c                
+028 1089 |              LOAD c                 
+029 8400 |              SKIPCOND 400           
+02A 902E |              JUMP if_3              
+02B 1085 |              LOAD div_times         
+02C 6000 |              OUTPUT                 
+02D 905B |              JUMP end_egypt         
+         |                                    
+02E 1087 |  if_3        LOAD a                 
+02F 4088 |              SUBT b                 
+030 8800 |              SKIPCOND 800           
+031 903E |              JUMP egypt_else        
+032 108C |              LOAD zero              
+033 2085 |              STORE div_times        
+034 2086 |              STORE div_mod          
+035 1087 |              LOAD a                 
+036 2083 |              STORE div_a            
+037 1088 |              LOAD b                 
+038 2084 |              STORE div_b            
+039 005C |              JNS div                
+03A 2087 |              STORE a                
+03B 1085 |              LOAD div_times         
+03C 6000 |              OUTPUT                 
+03D 9007 |              JUMP begin_egypt       
+         |                                    
+03E 108C |  egypt_else  LOAD zero              
+03F 2085 |              STORE div_times        
+040 2086 |              STORE div_mod          
+041 2082 |              STORE mult_acum        
+042 1088 |              LOAD b                 
+043 2083 |              STORE div_a            
+044 1087 |              LOAD a                 
+045 2084 |              STORE div_b            
+046 005C |              JNS div                
+047 1085 |              LOAD div_times         
+048 308B |              ADD one                
+049 208A |              STORE n                
+04A 6000 |              OUTPUT                 
+04B 1087 |              LOAD a                 
+04C 2080 |              STORE mult_a           
+04D 108A |              LOAD n                 
+04E 2081 |              STORE mult_b           
+04F 0073 |              JNS mult               
+050 4088 |              SUBT b                 
+051 2087 |              STORE a                
+         |                                    		
+052 108C |              LOAD zero              
+053 2082 |              STORE mult_acum        
+         |                                    		
+054 1088 |              LOAD b                 
+055 2080 |              STORE mult_a           
+056 108A |              LOAD n                 
+057 2081 |              STORE mult_b           
+058 0073 |              JNS mult               
+059 2088 |              STORE b                
+         |                                    		
+05A 9007 |              JUMP begin_egypt       
+         |                                    
+05B C006 |  end_egypt   JUMPI egypt            
+         |                                    
+         |                                    
+05C A000 |  div         CLEAR                  
+05D 1083 |  loop_div    LOAD div_a             
+05E 8800 |              SKIPCOND 800           
+05F 9067 |              JUMP fix_div           
+060 1083 |              LOAD div_a             
+061 4084 |              SUBT div_b             
+062 2083 |              STORE div_a            
+063 1085 |              LOAD div_times         
+064 308B |              ADD one                
+065 2085 |              STORE div_times        
+066 905D |              JUMP loop_div          
+067 1083 |  fix_div     LOAD div_a             
+068 8000 |              SKIPCOND 000           
+069 9071 |              JUMP end_div           
+06A 1085 |              LOAD div_times         
+06B 408B |              SUBT one               
+06C 2085 |              STORE div_times        
+06D 1083 |              LOAD div_a             
+06E 3084 |              ADD div_b              
+06F 2086 |              STORE div_mod          
+070 9071 |              JUMP end_div           
+071 1086 |  end_div     LOAD div_mod           
+072 C05C |              JUMPI div              
+         |                                    
+073 A000 |  mult        CLEAR                  
+074 1080 |  loop_mult   LOAD mult_a            
+075 8800 |              SKIPCOND 800           
+076 907E |              JUMP end_mult          
+077 1082 |              LOAD mult_acum         
+078 3081 |              ADD mult_b             
+079 2082 |              STORE mult_acum        
+07A 1080 |              LOAD mult_a            
+07B 408B |              SUBT one               
+07C 2080 |              STORE mult_a           
+07D 9074 |              JUMP loop_mult         
+07E 1082 |  end_mult    LOAD mult_acum         
+07F C073 |              JUMPI mult             
+         |                                    
+080 0000 |  mult_a      DEC 0                  
+081 0000 |  mult_b      DEC 0                  
+082 0000 |  mult_acum   DEC 0                  
+         |                                    
+083 0000 |  div_a       DEC 0                  
+084 0000 |  div_b       DEC 0                  
+085 0000 |  div_times   DEC 0                  
+086 0000 |  div_mod     DEC 0                  
+         |                                    
+087 0000 |  a           DEC 0                  
+088 0000 |  b           DEC 0                  
+089 0000 |  c           DEC 0                  
+08A 0000 |  n           DEC 0                  
+08B 0001 |  one         DEC 1                  
+08C 0000 |  zero        DEC 0                  
+
+Assembly successful.
+
+         SYMBOL TABLE
+         -------------------------------------------------------
+          Symbol      | Defined | References 
+         -------------+---------+-------------------------------
+          a           |   087   | 001, 008, 015, 022, 02E, 035, 
+                      |         | 03A, 044, 04B, 051
+          a_equal_0   |   008   | 007
+          b           |   088   | 003, 00C, 013, 024, 02F, 037, 
+                      |         | 042, 050, 054, 059
+          b_equal_0   |   00C   | 00A
+          begin_egypt |   007   | 03D, 05A
+          c           |   089   | 018, 019, 027, 028
+          div         |   05C   | 017, 026, 039, 046, 072
+          div_a       |   083   | 014, 023, 036, 043, 05D, 060, 
+                      |         | 062, 067, 06D
+          div_b       |   084   | 016, 025, 038, 045, 061, 06E
+          div_mod     |   086   | 012, 021, 034, 040, 06F, 071
+          div_times   |   085   | 011, 01C, 020, 02B, 033, 03B, 
+                      |         | 03F, 047, 063, 065, 06A, 06C
+          egypt       |   006   | 004, 05B
+          egypt_else  |   03E   | 031
+          end_div     |   071   | 069, 070
+          end_egypt   |   05B   | 00B, 00F, 01E, 02D
+          end_mult    |   07E   | 076
+          fix_div     |   067   | 05F
+          if_1        |   010   | 00E
+          if_2        |   01F   | 01B
+          if_3        |   02E   | 02A
+          loop_div    |   05D   | 066
+          loop_mult   |   074   | 07D
+          mult        |   073   | 04F, 058, 07F
+          mult_a      |   080   | 04C, 055, 074, 07A, 07C
+          mult_acum   |   082   | 041, 053, 077, 079, 07E
+          mult_b      |   081   | 04E, 057, 078
+          n           |   08A   | 049, 04D, 056
+          one         |   08B   | 048, 064, 06B, 07B
+          zero        |   08C   | 010, 01F, 032, 03E, 052
+         -------------------------------------------------------
+
+

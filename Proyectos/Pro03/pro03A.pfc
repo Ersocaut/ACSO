@@ -1,0 +1,268 @@
+program pro3;
+	const N = 2001;
+
+  	type Tstring = array [0..N] of char;
+
+  	procedure readString(var string: Tstring);
+    	var i : integer;
+        	c : char;
+  	begin
+   		i := 1;
+   	repeat
+		read(c);
+		if ord(c)<>13 then
+		begin
+		string[i] := c;
+		i := i + 1
+	end;
+	until eoln;
+	readln;
+	string[i] := chr(0)
+	end;
+
+function stringLength(var string: Tstring): integer;
+	var  i: integer;
+begin
+	i := 1;
+	while string[i] <> chr(0) do
+		begin
+			i := i + 1
+		end;
+	stringLength := i-1
+end;
+procedure writeString(var string: Tstring);
+	var i: integer;
+begin
+	i := 1;
+	while string[i] = ('0') do
+		begin
+			i := i + 1;
+		end;
+	while string[i] <> chr(0) do
+	begin
+		write(string[i]);
+		i := i + 1
+	end;
+	writeln
+end;
+procedure write2String(var string1: Tstring);
+	var a: integer;
+begin
+	a := 1;
+	while string1[a] <> chr(0) do
+	begin
+		write(string1[a]);
+		a := a + 1
+	end;
+	writeln
+end;
+var
+	arreglo1 : Tstring;
+	precision : integer;
+	bits : integer;
+	bias : integer;
+	num1 : integer;
+procedure leercharac (var arreglo1 : Tstring );
+begin
+	readstring(arreglo1);
+end;
+procedure llenararreglo(var arreglo1 : Tstring; num1 : integer; precision : integer);
+var
+	num2 : integer;
+	num3 : integer;
+	i : integer;
+begin
+	if num1 < precision then
+		begin
+			num2 := precision;
+			num3 := num1;
+			while (num2 > num1) and (num3 > 0) do
+				begin
+					arreglo1[num2] := arreglo1[num3];
+					num2 := num2 - 1;
+					num3 := num3 - 1;
+				end;
+			for  i := 1 to (precision - num1) do
+				begin
+					arreglo1[i] := '0';
+				end;
+		end;
+end;
+procedure signof (arreglo1: Tstring; var signo : char);
+	begin
+	signo := arreglo1[1];
+	end;
+var
+	se: semaphore;
+process type Tprocebits (var arreglo1: Tstring; bits: integer; var decimal: integer; num7: integer; var arreglo2: Tstring);
+	procedure convertiradec(var arreglo2: Tstring; bits : integer;var decimal: integer);
+		var
+			parasumar : integer;
+			resp : integer;
+			j : integer;
+			f : integer;
+			num4 : integer;
+			num5 : integer;
+		begin
+		num4 := 0;
+		num5 := bits;
+		for j := 1 to bits do
+			begin
+			parasumar := 1;
+			if (j = 1)  then
+				begin
+				if ((ord(arreglo2[num5]) - ord('0')) <> 0) then
+					begin
+					resp := 1;
+					num5:= num5-1;
+					end
+				else
+					begin
+					resp := 0;
+					num5 := num5 - 1;
+					end;
+				end
+			else
+				begin
+				for f := 0 to num4 do
+					begin
+					parasumar := parasumar * 2;
+					end;
+				num4 := num4 + 1;
+				resp := ((ord(arreglo2[num5])-ord('0')) * parasumar);
+				num5 := num5 - 1;
+				end;
+			decimal := decimal + resp;
+			end;
+		end;
+{process type Tprocebits (var arreglo1: Tstring; bits: integer; var decimal: integer; num7: integer; var arreglo2: Tstring);}
+	var
+		num6 : integer;
+	begin
+	for num6 := 1 to (bits + 1) do
+		begin
+		wait(se);
+		arreglo2[num6-1] := arreglo1[num6];
+		signal(se);
+		end;
+	convertiradec(arreglo2, bits, decimal);
+	decimal := decimal - bias;
+	end;
+
+process type Tpuntoinicial(var arreglo1 :Tstring; var arreglo3 : Tstring; bits : integer; precision: integer);
+	var
+		k : integer;
+		valor : integer;
+	begin
+	arreglo3[1]:= '0';
+	arreglo3[2]:='.';	
+	arreglo3[3]:= '1';
+	valor := 4;
+	for k := (bits + 2) to precision do
+		begin
+		wait(se);
+		arreglo3[valor]:= arreglo1[k];
+		signal(se);
+		valor := valor + 1; 
+		end;
+	end;
+
+procedure puntofinal(var arreglo3: Tstring; decimal: integer; num7:integer);
+	var
+		h:integer;
+		num9 : integer;
+		s : integer;
+	begin
+	if decimal < 0 then
+		begin
+		num9:= num7;
+		h := num7 - decimal;
+		while h > (-decimal +2) do
+			begin
+			arreglo3[h] := arreglo3[num9];
+			h := h-1;
+			num9 := num9 -1;
+			end;
+		for h := 3 to (-decimal+2) do
+			begin
+			arreglo3[h] := '0'
+			end;
+		end
+	else
+		begin
+		if num7-2 > decimal then
+			begin
+			for s:= 3 to (decimal + 2) do
+				begin
+				arreglo3[s-1] := arreglo3[s];
+				arreglo3[s]:= '.';
+				end;
+			end
+		else if num7-2 < decimal then
+			begin
+			arreglo3[2] := '0';
+			for s:= (num7 + 1) to (decimal + 2) do
+				begin
+				arreglo3[s] := '0';
+				end;
+			end
+		else
+			begin
+			arreglo3[2] := '0';
+			end; 
+		end; 
+	end;
+
+var
+	signo: char;
+	decimalf : integer;
+	arreglo3 : Tstring;
+	num8 : integer;
+	i: integer;
+	procebits: Tprocebits;
+	puntoinicial: Tpuntoinicial;
+	arreglo2 : Tstring;
+begin
+	readln(precision);
+	readln(bits);
+	readln(bias);
+	leercharac(arreglo1);
+	signo := '0';
+	decimalf := 0;
+        num1 := stringlength(arreglo1);
+	llenararreglo(arreglo1, num1, precision);
+	signof (arreglo1, signo);
+	initial(se,1);
+	cobegin
+        	procebits(arreglo1, bits, decimalf, bias, arreglo2);
+		puntoinicial(arreglo1, arreglo3, bits, precision);		 	
+	coend;
+	num8 :=stringlength(arreglo3);
+	puntofinal(arreglo3, decimalf, num8);
+	if decimalf > 0 then
+		begin
+		if (ord(signo)-ord('0')) < 1 then
+                	begin
+                	writestring(arreglo3);
+                	end
+        	else
+                	begin
+                	write('-');
+                	writestring(arreglo3);
+                	end;
+		end
+	else
+		begin
+		if (ord(signo)-ord('0')) < 1 then
+                	begin
+                	write2string(arreglo3);
+                	end
+		else
+                	begin
+                	write('-');
+                	write2string(arreglo3);
+                	end;
+		end;
+
+
+end.

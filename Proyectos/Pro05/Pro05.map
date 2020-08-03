@@ -1,0 +1,30 @@
+ --------------------
+ Symbol    | Location
+ ----------+---------
+ Bel       |   07A
+ Fra       |   07E
+ Ing       |   07B
+ Irl       |   07D
+ Nor       |   07C
+ Tot       |   07F
+ div       |   04B
+ div_a     |   077
+ div_b     |   078
+ div_mod   |   079
+ div_times |   076
+ else_gcd  |   06E
+ end_div   |   060
+ end_gcd   |   072
+ eval_gcd  |   063
+ fix_div   |   056
+ gcd       |   062
+ gcd_a     |   074
+ gcd_a1    |   082
+ gcd_a2    |   083
+ gcd_b     |   075
+ gcd_t     |   084
+ loop_div  |   04C
+ one       |   080
+ while_gcd |   068
+ zero      |   081
+

@@ -1,0 +1,105 @@
+program pro2;
+
+const N = 2001;
+const B = 10;
+
+type TString = array[1..N] of char;
+procedure setNull(var s : TString);
+	var
+		i : integer;
+	begin
+		for i := 1 to N do
+			s[i] := chr(0);
+	end;
+
+procedure readString(var string: TString);
+	var 
+		i : integer;
+		c : char;
+	begin
+		for i:= 1 to N do
+			string[i] := chr(0);
+		i := 1;
+		repeat
+			read(c);
+			string[i] := c;
+			i := i + 1;
+		until eoln;
+		read(c);
+	end;
+
+function stringLength( var string: TString) : integer;
+	var 
+		i : integer;
+	begin
+		i := 1;
+		while string[i] <> chr(0) do
+			i := i + 1;
+		stringLength := i - 1
+	end;
+
+procedure writeString(var string: TString);
+	var 
+		i : integer;
+		b,e : boolean;
+	begin
+		i := 1;
+		b := false;
+		e := false;
+		 
+		while (string[i] <> chr(0)) do
+			begin
+				if not(b) and (string[i] <> chr(48)) then
+					begin
+						e := true;
+						b := true;
+					end;
+				if (e) then
+					write(string[i]);
+				i := i + 1
+			end;
+		writeln
+	end;
+	
+procedure suma ( var s1, s2 : TString);
+	var
+		i, len1, len2, tot, lleva, temp, ind : integer;
+		res : TString;
+	begin 
+		setNull(res);
+		lleva := 0;
+		len1 := stringLength(s1);
+		len2 := stringLength(s2);
+		if ( len1 > len2) then
+			tot := len1
+		else
+			tot := len2;
+		ind := tot + 1;
+		for i := 0 to tot do
+			begin
+				temp := 0;
+				if (i < len1) then 
+					temp := temp + ord(s1[len1 - i]) - 48;
+				if (i < len2) then
+					temp := temp + ord(s2[len2 - i]) - 48;
+				temp := temp + lleva;
+				lleva := temp div B;
+				temp := temp mod B;
+				res[ind] := chr(temp + 48);
+				ind := ind - 1;
+			end;
+		writeString(res);
+	end;
+var
+	str1, str2 : TString;
+	m, i : integer;
+begin
+	readln(m);
+	for i := 1 to m do
+	begin
+		readString(str1);
+		readString(str2);
+		suma(str1,str2);
+	end;
+
+end.

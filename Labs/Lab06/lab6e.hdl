@@ -1,0 +1,17 @@
+//S = A1 A0 + A2 A1 + A3 A2 + A4 A3
+
+CHIP lab6e{
+	IN A0,A1,A2,A3,A4;
+	OUT S;
+	
+	PARTS:
+		And( a = A0, b = A1, out = S1 );
+		And( a = A1, b = A2, out = S2 );
+		And( a = A2, b = A3, out = S3 );
+		And( a = A3, b = A4, out = S4 );
+		
+		Or( a =  S1, b = S2, out = S5 );
+		Or( a = S3, b = S4, out = S6 );
+		
+		Or( a = S5, b = S6, out = S );
+}

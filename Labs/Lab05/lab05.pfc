@@ -1,0 +1,98 @@
+program lab5;
+	const N = 32;
+
+type 
+	TString = array [1..N] of char;
+	TChannel = channel of integer;
+
+  procedure readString(var string: TString);
+    var i : integer;
+        c : char;
+  begin
+    for i := 1 to N do
+      string[i] := chr(0);
+    i := 1;
+    repeat
+      read(c);
+      string[i] := c;
+      i := i + 1
+    until eoln;
+  end;
+
+  function stringLength(var string: TString): integer;
+    var  i: integer;
+begin
+    i := 1;
+    while string[i] <> chr(0) do
+      i := i + 1;
+    stringLength := i - 1
+end;
+
+function power(bas,exp: integer) : integer;
+var
+	i, dec : integer;
+begin
+	dec := 1;
+	for i := 1 to exp do
+		begin
+			dec := dec * bas;
+		end;
+	power := dec
+end;
+process type TConsumidor ( var cin: TChannel; var cout: TChannel);
+var
+	n, exp, num : integer;
+begin
+	cin ? n;
+	cin ? exp;
+	num := 0;
+	if ( n <> 0 ) then
+		num := power(2,exp);
+	if ( n = 1 ) and ( exp = 0 ) then
+		num := 1;
+	cout ! num;
+end;
+type
+	TChannels = array[1..N] of TChannel;
+
+
+process type TProductor(var cin: TChannels; var cout: TChannels; str: TString);
+var
+	i, len, piv, dec : integer;
+begin
+	len := stringLength(str);
+	for i := 1 to N do
+		if i < len + 1 then
+			cout[i] ! ord(str[i]) - 48
+		else
+			cout[i] ! 0;
+	for i := 1 to N do
+		if i <= len + 1 then
+			cout[i] ! len - i
+		else
+			cout[i] ! 0;
+	dec := 0;
+	for i := 1 to N do
+		begin
+			cin[i] ? piv;
+			dec := dec + piv;
+		end;
+	writeln(dec);
+end;
+
+type
+	TProcesos = array[1..N] of TConsumidor;
+var
+	productor : TProductor;
+	procesos : TProcesos;
+	cin, cout : TChannels;
+	i : integer;
+	str : TString;
+begin
+	cobegin
+		readString(str);
+		productor(cin,cout,str);
+		for i:= 1 to N do
+			procesos[i](cout[i],cin[i]);
+	coend;
+end.
